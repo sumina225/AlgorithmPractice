@@ -4,22 +4,20 @@ import java.io.InputStreamReader;
 public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
+        long N = Long.parseLong(br.readLine());
 
-        int answer = 0;
+        long answer = 0;
+        long start = 1;
+        int len = 1;
 
-        while (n > 0) {
-            int temp = n;
-            int digit = 0;
+        while (start <= N) {
+            long end = start * 10 - 1;
+            if (end > N) end = N;
 
-            // 자릿수 계산
-            while (temp > 0) {
-                temp /= 10;
-                digit++;
-            }
+            answer += (end - start + 1) * len;
 
-            answer += digit;
-            n--;
+            start *= 10;
+            len++;
         }
 
         System.out.println(answer);
