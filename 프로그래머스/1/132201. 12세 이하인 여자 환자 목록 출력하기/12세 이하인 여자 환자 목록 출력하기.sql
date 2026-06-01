@@ -1,0 +1,11 @@
+-- 코드를 입력하세요
+SELECT A.PT_NAME AS PT_NAME
+     , A.PT_NO AS PT_NO
+     , A.GEND_CD AS GEND_CD
+     , A.AGE AS AGE
+     , NVL(A.TLNO, 'NONE') AS TLNO
+  FROM PATIENT A
+ WHERE A.AGE <= 12
+   AND A.GEND_CD = 'W'
+ ORDER BY A.AGE DESC
+        , A.PT_NAME ASC
