@@ -8,4 +8,3 @@ SELECT A.ANIMAL_ID AS ANIMAL_ID
            ELSE 'X'
        END AS 중성화
   FROM ANIMAL_INS A
- 
