@@ -1,0 +1,7 @@
+-- 코드를 입력하세요
+SELECT COUNT(*)
+  FROM USER_INFO A
+ WHERE TO_CHAR(A.JOINED, 'YYYY-MM-DD') LIKE '2021%'
+   AND A.AGE <= 29
+   AND A.AGE >= 20
+   
