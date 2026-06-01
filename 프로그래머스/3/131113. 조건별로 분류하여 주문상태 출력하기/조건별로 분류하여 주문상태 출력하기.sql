@@ -1,0 +1,13 @@
+-- 코드를 입력하세요
+SELECT A.ORDER_ID AS ORDER_ID
+     , A.PRODUCT_ID AS PRODUCT_ID
+     , TO_CHAR(A.OUT_DATE, 'YYYY-MM-DD') AS OUT_DATE
+     , CASE
+        WHEN A.OUT_DATE IS NULL
+        THEN '출고미정'
+        WHEN A.OUT_DATE > TO_DATE('2022-05-01', 'YYYY-MM-DD')
+        THEN '출고대기'
+        ELSE '출고완료'
+       END AS 출고여부
+  FROM FOOD_ORDER A
+ ORDER BY A.ORDER_ID ASC
