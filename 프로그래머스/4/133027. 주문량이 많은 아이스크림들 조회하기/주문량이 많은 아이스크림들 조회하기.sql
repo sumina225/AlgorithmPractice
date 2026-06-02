@@ -1,0 +1,11 @@
+-- 코드를 입력하세요
+SELECT A.FLAVOR AS FLAVOR
+  FROM (SELECT A.FLAVOR AS FLAVOR
+          FROM FIRST_HALF A
+         INNER JOIN JULY B
+            ON A.FLAVOR = B.FLAVOR
+         GROUP BY A.FLAVOR
+                , A.TOTAL_ORDER
+         ORDER BY A.TOTAL_ORDER + SUM(B.TOTAL_ORDER) DESC
+       ) A
+ WHERE ROWNUM <= 3
