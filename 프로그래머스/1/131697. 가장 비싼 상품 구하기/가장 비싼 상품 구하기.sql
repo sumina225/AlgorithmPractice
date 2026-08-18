@@ -1,3 +1,2 @@
--- 코드를 입력하세요
 SELECT MAX(A.PRICE) AS MAX_PRICE
   FROM PRODUCT A
