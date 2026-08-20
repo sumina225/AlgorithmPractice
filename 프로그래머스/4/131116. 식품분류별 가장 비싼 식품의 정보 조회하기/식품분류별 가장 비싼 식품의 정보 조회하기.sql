@@ -1,13 +1,12 @@
-SELECT A.CATEGORY,
-       A.PRICE AS MAX_PRICE,
-       A.PRODUCT_NAME
+SELECT A.CATEGORY
+     , A.PRICE AS MAX_PRICE
+     , A.PRODUCT_NAME
   FROM FOOD_PRODUCT A
- INNER JOIN (SELECT CATEGORY
-                  , MAX(PRICE) AS MAX_PRICE
-               FROM FOOD_PRODUCT
-              WHERE CATEGORY IN ('과자', '국', '김치', '식용유')
-              GROUP BY CATEGORY
-            ) B
+ INNER JOIN (SELECT AA.CATEGORY
+                  , MAX(AA.PRICE) AS PRICE
+               FROM FOOD_PRODUCT AA
+              WHERE AA.CATEGORY IN ('과자', '국', '김치', '식용유')
+              GROUP BY AA.CATEGORY) B
     ON A.CATEGORY = B.CATEGORY
-   AND A.PRICE = B.MAX_PRICE
- ORDER BY A.PRICE DESC;
+   AND A.PRICE = B.PRICE
+ ORDER BY A.PRICE DESC
