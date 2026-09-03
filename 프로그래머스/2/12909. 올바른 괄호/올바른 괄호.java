@@ -1,17 +1,21 @@
-public class Solution {
+class Solution {
     boolean solution(String s) {
-        int count = 0;
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (c == '(') {
-                count++;
-            } else if (c == ')') {
-                count--;
-                if (count < 0) {
-                    return false;
-                }
+        boolean answer = true;
+        int[] nums = new int[2];
+        for(int i = 0; i < s.length(); i++){
+            if(s.charAt(i) == '(') {
+                nums[0]++;
+            } else {
+                nums[1]++;
+            }
+            if(nums[1] > nums[0]){
+                answer = false;
+                break;
             }
         }
-        return count == 0;
+        if(nums[0] != nums[1]){
+            answer = false;
+        }
+        return answer;
     }
 }
