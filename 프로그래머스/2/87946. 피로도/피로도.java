@@ -1,36 +1,23 @@
-import java.util.*;
-
 class Solution {
-    static int[] needEnergy;
-    static int[] useEnergy;
+    
+    static int answer;
     static boolean[] visited;
-    static int num;
-    static int answer = 0;
-
-    public void dfs(int cnt, int remain) {
-        for (int i = 0; i < num; i++) {
-            if (!visited[i] && needEnergy[i] <= remain) {
+        
+    public int solution(int k, int[][] dungeons) {
+        answer = 0;
+        visited = new boolean[dungeons.length];
+        func(0,k,dungeons);
+        return answer;
+    }
+    
+    public void func(int count, int now, int[][] dungeons) {
+        for(int i = 0; i < dungeons.length; i++){
+            if(!visited[i] && dungeons[i][0] <= now){
                 visited[i] = true;
-                dfs(cnt + 1, remain - useEnergy[i]);
-                visited[i] = false; // Backtrack
+                func(count+1, now-dungeons[i][1], dungeons);
+                visited[i] = false;
             }
         }
-        answer = Math.max(answer, cnt);
-        return;
-    }
-
-    public int solution(int k, int[][] dungeons) {
-        num = dungeons.length;
-        needEnergy = new int[num];
-        useEnergy = new int[num];
-        visited = new boolean[num];
-
-        for (int i = 0; i < num; i++) {
-            needEnergy[i] = dungeons[i][0];
-            useEnergy[i] = dungeons[i][1];
-        }
-
-        dfs(0, k);
-        return answer;
+        answer = Math.max(answer, count);
     }
 }
