@@ -1,32 +1,36 @@
 import java.util.*;
 
-public class Solution {
+class Solution {
+    static class Process{
+        int priority;
+        int location;
+        
+        public Process(int priority, int location){
+            this.priority = priority;
+            this.location = location;
+        }
+    }
+    
     public int solution(int[] priorities, int location) {
-        Queue<int[]> q = new LinkedList<>();
-        for (int i = 0; i < priorities.length; i++) {
-            q.offer(new int[]{priorities[i], i});
+        int answer = 0;
+        Deque<Process> deque = new ArrayDeque<>();
+        for(int i = 0; i < priorities.length; i++){
+            deque.addLast(new Process(priorities[i],i));
         }
-
-        int count = 0;
-        while (!q.isEmpty()) {
-            int[] cur = q.poll();
-            boolean hasHigher = false;
-            for (int[] p : q) {
-                if (p[0] > cur[0]) {
-                    hasHigher = true;
-                    break;
+        Arrays.sort(priorities);
+        int num = priorities.length-1;
+        while(!deque.isEmpty()){
+            Process process = deque.pollFirst();
+            if(process.priority == priorities[num]){
+                if(process.location == location) {
+                    answer = priorities.length - num;
                 }
-            }
-
-            if (hasHigher) {
-                q.offer(cur);
+                num--;
             } else {
-                count++;  
-                if (cur[1] == location) {
-                    return count;
-                }
+                deque.addLast(process);
             }
         }
-        return count;
+        
+        return answer;
     }
 }
