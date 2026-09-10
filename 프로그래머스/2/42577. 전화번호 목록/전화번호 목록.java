@@ -2,13 +2,18 @@ import java.util.*;
 
 class Solution {
     public boolean solution(String[] phone_book) {
-        Arrays.sort(phone_book);
-        for (int i = 0; i < phone_book.length - 1; i++) {
-            // 바로 뒤의 번호가 현재 번호를 접두사로 가지는지 확인
-            if (phone_book[i+1].startsWith(phone_book[i])) {
-                return false;
+        boolean answer = true;
+        Map<String,Integer> map = new HashMap<>();
+        for(int i = 0; i < phone_book.length; i++){
+            map.put(phone_book[i], 1);
+        }
+        for(int i = 0; i < phone_book.length; i++){
+            for(int j = 0; j < phone_book[i].length(); j++){
+                if(map.getOrDefault(phone_book[i].substring(0,j),0) == 1){
+                    return false;   
+                }
             }
         }
-        return true;
+        return answer;
     }
 }
