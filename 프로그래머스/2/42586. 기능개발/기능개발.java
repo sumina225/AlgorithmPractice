@@ -3,20 +3,29 @@ import java.util.*;
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
         List<Integer> list = new ArrayList<>();
-        int day = 0;
-        int index = 0;
-        
-        while(index < progresses.length) {
-            int count = 0;
-            day = (int) Math.ceil((100.0 - progresses[index]) / speeds[index]);
-            while(index < progresses.length && 
-                  Math.ceil((100.0 - progresses[index]) / speeds[index]) <= day) {
-                count++;
-                index++;
+        int[] days = new int[speeds.length];
+        for(int i = 0; i < speeds.length; i++){
+            int num = 1;
+            while(progresses[i] + speeds[i]*num < 100){
+                num++;
             }
-            
-            list.add(count);
+            days[i] = num;
         }
+        int start = 0;
+        int complete = 1;
+        int count = 1;
+        while(complete < days.length){
+            if(days[complete] <= days[start]){
+                count++;
+                complete++;
+            }else {
+                list.add(count);
+                count = 1;
+                start = complete;
+                complete++;
+            }
+        }
+        list.add(count);
         int[] answer = new int[list.size()];
         for(int i = 0; i < answer.length; i++){
             answer[i] = list.get(i);
