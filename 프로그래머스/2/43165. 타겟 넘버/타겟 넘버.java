@@ -1,23 +1,21 @@
-import java.util.*;
-
 class Solution {
-    static int answer = 0;
-
-    public void dfs(int[] numbers, int target, int idx, int sum) {
-        if (idx == numbers.length) {
-            if (sum == target) {
+    
+    static int answer;
+    
+    public int solution(int[] numbers, int target) {
+        answer = 0;
+        func(0,target,numbers,0);
+        return answer;
+    }
+    
+    public void func(int index, int target, int[] numbers, int sum) {
+        if(index == numbers.length){
+            if(sum == target){
                 answer++;
             }
             return;
         }
-        
-        dfs(numbers, target, idx + 1, sum + numbers[idx]);
-        dfs(numbers, target, idx + 1, sum - numbers[idx]);
-    }
-
-    public int solution(int[] numbers, int target) {
-        answer = 0;
-        dfs(numbers, target, 0, 0);
-        return answer;
+        func(index+1, target, numbers, sum + numbers[index]);
+        func(index+1, target, numbers, sum - numbers[index]);
     }
 }
