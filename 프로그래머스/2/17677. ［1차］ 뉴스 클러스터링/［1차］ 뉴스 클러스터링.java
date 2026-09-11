@@ -1,55 +1,71 @@
 import java.util.*;
 
 class Solution {
+
     public int solution(String str1, String str2) {
-        str1 = str1.toLowerCase();
-        str2 = str2.toLowerCase();
 
-        List<String> list1 = new ArrayList<>();
-        List<String> list2 = new ArrayList<>();
+        Map<String, Integer> map1 = makeMap(str1.toUpperCase());
+        Map<String, Integer> map2 = makeMap(str2.toUpperCase());
 
-        for (int i = 0; i < str1.length() - 1; i++) {
-            char char1 = str1.charAt(i);
-            char char2 = str1.charAt(i + 1);
-            if (char1 >= 'a' && char1 <= 'z' && char2 >= 'a' && char2 <= 'z') {
-                list1.add(str1.substring(i, i + 2));
+        int intersection = 0;
+        int union = 0;
+
+        // 교집합 계산
+        for (String key : map1.keySet()) {
+
+            if (map2.containsKey(key)) {
+                intersection += Math.min(
+                    map1.get(key),
+                    map2.get(key)
+                );
             }
         }
 
-        for (int i = 0; i < str2.length() - 1; i++) {
-            char char1 = str2.charAt(i);
-            char char2 = str2.charAt(i + 1);
-            if (char1 >= 'a' && char1 <= 'z' && char2 >= 'a' && char2 <= 'z') {
-                list2.add(str2.substring(i, i + 2));
-            }
+        // 합집합 계산
+        Set<String> keys = new HashSet<>();
+
+        keys.addAll(map1.keySet());
+        keys.addAll(map2.keySet());
+
+        for (String key : keys) {
+
+            int cnt1 = map1.getOrDefault(key, 0);
+            int cnt2 = map2.getOrDefault(key, 0);
+
+            union += Math.max(cnt1, cnt2);
         }
 
-        if (list1.isEmpty() && list2.isEmpty()) {
+        // 둘 다 공집합인 경우
+        if (union == 0) {
             return 65536;
         }
 
-        List<String> intersection = new ArrayList<>();
-        List<String> union = new ArrayList<>();
+        return (int) ((double) intersection / union * 65536);
+    }
 
-        List<String> temp_list2 = new ArrayList<>(list2);
 
-        for (String s : list1) {
-            if (temp_list2.remove(s)) {
-                intersection.add(s);
+    private Map<String, Integer> makeMap(String str) {
+
+        Map<String, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < str.length() - 1; i++) {
+
+            char a = str.charAt(i);
+            char b = str.charAt(i + 1);
+
+            // 둘 다 영문자인 경우만 사용
+            if (a >= 'A' && a <= 'Z'
+                    && b >= 'A' && b <= 'Z') {
+
+                String word = str.substring(i, i + 2);
+
+                map.put(
+                    word,
+                    map.getOrDefault(word, 0) + 1
+                );
             }
-            union.add(s);
-        }
-        
-        union.addAll(temp_list2);
-
-        double jaccardSimilarity;
-        if (union.isEmpty()) {
-            jaccardSimilarity = 1.0;
-        } else {
-            jaccardSimilarity = (double) intersection.size() / union.size();
         }
 
-        int answer = (int) (jaccardSimilarity * 65536);
-        return answer;
+        return map;
     }
 }

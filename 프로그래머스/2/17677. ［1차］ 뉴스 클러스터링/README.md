@@ -1,10 +1,10 @@
 # [level 2] [1차] 뉴스 클러스터링 - 17677 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/17677?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/17677) 
 
 ### 성능 요약
 
-메모리: 82.6 MB, 시간: 1.24 ms
+메모리: 74.2 MB, 시간: 0.69 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 07월 24일 16:44:55
+2026년 09월 11일 22:35:43
 
 ### 문제 설명
 
