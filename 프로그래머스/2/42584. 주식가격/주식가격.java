@@ -4,35 +4,29 @@ class Solution {
     
     static class Price{
         int price;
-        int count;
+        int idx;
         
-        Price(int price, int count){
+        public Price(int price, int idx){
             this.price = price;
-            this.count = count;
+            this.idx = idx;
         }
     }
     
-    
     public int[] solution(int[] prices) {
-        int[] answer = new int[prices.length];
-        Stack<Price> stack = new Stack<>();
-        for(int i = 0; i < prices.length; i++){
-            if(!stack.isEmpty() && stack.peek().price > prices[i]){
-                while(!stack.isEmpty() && stack.peek().price > prices[i]){
-                    Price temp = stack.pop();
-                    answer[temp.count] = i-temp.count;
-                }
-                Price price = new Price(prices[i],i);
-                stack.push(price);
-            }else{
-                Price price = new Price(prices[i],i);
-                stack.push(price);
+        int len = prices.length;
+        int[] answer = new int[len];
+        PriorityQueue<Price> pq = new PriorityQueue<>((a,b) -> b.price - a.price);
+        for(int i = 0; i < len; i++){
+            while(!pq.isEmpty() && pq.peek().price > prices[i]){
+                Price p = pq.poll();
+                answer[p.idx] = i - p.idx;
             }
+            pq.offer(new Price(prices[i],i));
         }
-        while(!stack.isEmpty()){
-            Price temp = stack.pop();
-            answer[temp.count] = prices.length-temp.count-1;
-        }
+        while(!pq.isEmpty()){
+                Price p = pq.poll();
+                answer[p.idx] = len - 1 - p.idx;
+            }
         return answer;
     }
 }
