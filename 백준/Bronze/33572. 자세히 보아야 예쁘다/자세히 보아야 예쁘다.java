@@ -1,0 +1,24 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        long n = Long.parseLong(st.nextToken());
+        long m = Long.parseLong(st.nextToken());
+        st = new StringTokenizer(br.readLine());
+        long sum = 0;
+        for (int i = 0; i < n; i++) {
+            long num = Long.parseLong(st.nextToken());
+            sum += num-1;
+        }
+        if(sum < m) {
+            System.out.println("OUT");
+        } else {
+            System.out.println("DIMI");
+        }
+    }
+}
