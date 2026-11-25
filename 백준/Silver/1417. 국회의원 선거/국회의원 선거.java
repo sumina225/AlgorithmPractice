@@ -1,26 +1,37 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> b-a);
         int dasom = Integer.parseInt(br.readLine());
+
+        int[] freq = new int[101];
+        int max = 0;
+
         for (int i = 1; i < n; i++) {
             int num = Integer.parseInt(br.readLine());
-            pq.add(num);
+            freq[num]++;
+            max = Math.max(max, num);
         }
+
         int count = 0;
-        while(!pq.isEmpty() && pq.peek() >= dasom){
-            int num = pq.poll();
-            num--;
+
+        while (max >= dasom) {
+            if (freq[max] == 0) {
+                max--;
+                continue;
+            }
+
+            freq[max]--;
+            freq[max - 1]++;
             dasom++;
             count++;
-            pq.add(num);
         }
+
         System.out.println(count);
     }
 }
